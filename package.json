@@ -1,0 +1,34 @@
+{
+  "name": "component-docs",
+  "version": "1.0.0",
+  "description": "组件文档项目",
+  "type": "module",
+  "scripts": {
+    "dev": "vitepress dev docs",
+    "build": "vitepress build docs",
+    "preview": "vitepress preview docs",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
+    "demo:dev": "vite --open /demo/",
+    "demo:preview": "vite preview --open /demo/",
+    "api:generate": "node scripts/generate-api.js",
+    "changelog:generate": "node scripts/generate-changelog.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "conventional-changelog": "^7.0.0",
+    "conventional-changelog-cli": "^2.2.0",
+    "typescript": "^5.0.0",
+    "vite": "^7.1.11",
+    "vitepress": "^1.0.0",
+    "vue": "^3.3.0",
+    "vue-docgen-api": "^4.79.2",
+    "vue-docgen-cli": "^4.79.0",
+    "vue-tsc": "^1.8.0"
+  },
+  "dependencies": {
+    "vue": "^3.3.0"
+  }
+}
