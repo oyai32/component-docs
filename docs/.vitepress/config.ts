@@ -2,30 +2,30 @@ import { defineConfig } from 'vitepress'
 import { resolve } from 'path'
 
 export default defineConfig({
-  title: '组件文档',
-  description: 'Vue3 组件库文档',
+  title: 'xxx组件',
+  description: 'xx组件文档',
   
   themeConfig: {
     nav: [
       { text: '首页', link: '/' },
-      { text: '组件', link: '/components/button' },
+      { text: '示例', link: '/examples/button' },
+      { text: 'API', link: '/api' },
       { text: '更新日志', link: '/changelog' }
     ],
 
     sidebar: {
-      '/components/': [
+      '/examples/': [
         {
-          text: '组件列表',
           items: [
-            { text: 'Button 按钮', link: '/components/button' },
-            { text: 'Input 输入框', link: '/components/input' }
+            { text: 'Button 按钮', link: '/examples/button' },
+            { text: 'Input 输入框', link: '/examples/input' }
           ]
         }
       ]
     },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/your-username/component-docs' }
+      { icon: 'github', link: 'https://github.com/' }
     ]
   },
 
