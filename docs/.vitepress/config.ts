@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+import { resolve } from 'path'
 
 export default defineConfig({
   title: '组件文档',
@@ -31,7 +32,12 @@ export default defineConfig({
   vite: {
     resolve: {
       alias: {
-        '@': '/src'
+        '@': resolve(__dirname, '../../src')
+      }
+    },
+    server: {
+      fs: {
+        allow: ['..']
       }
     }
   }

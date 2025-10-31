@@ -4,7 +4,12 @@
 
 ## 基础用法
 
-<demo src="../../../demo/examples/ButtonDemo.vue" />
+<script setup>
+import CustomComponent from '../../demo/examples/ButtonDemo.vue'
+</script>
+
+<CustomComponent />
+
 
 ## API
 
