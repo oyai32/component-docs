@@ -6,56 +6,32 @@
 
 ## 目录
 
-- [Button](#button)
-- [Input](#input)
+- [Counter](#counter)
 
 ---
 
-## Button
+## Counter
 
 ### Props
 
 | 参数 | 类型 | 默认值 | 是否必填 | 说明 |
 |------|------|--------|---------|------|
-| type | `'primary' | 'secondary' | 'danger' | 'success'` | 'primary' | 否 | 按钮类型 |
-| size | `'small' | 'medium' | 'large'` | 'medium' | 否 | 按钮大小 |
+| modelValue | `number` | 0 | 否 | 初始值 |
+| min | `number` | -Infinity | 否 | 最小值 |
+| max | `number` | Infinity | 否 | 最大值 |
+| step | `number` | 1 | 否 | 步长 |
+| label | `string` | '计数' | 否 | 标签文本 |
 | disabled | `boolean` | false | 否 | 是否禁用 |
-| block | `boolean` | false | 否 | 是否为块级元素 |
+| showIcon | `boolean` | true | 否 | 是否显示图标 |
+| showReset | `boolean` | false | 否 | 是否显示重置按钮 |
+| increaseText | `string` | '增加' | 否 | 增加按钮文本 |
+| decreaseText | `string` | '减少' | 否 | 减少按钮文本 |
 
 ### Events
 
 | 事件名 | 参数 | 说明 |
 |--------|------|------|
-| click | `event: MouseEvent` | - |
-
-### Slots
-
-| 插槽名 | 说明 |
-|--------|------|
-| default | 默认 插槽 |
-
-
----
-
-## Input
-
-### Props
-
-| 参数 | 类型 | 默认值 | 是否必填 | 说明 |
-|------|------|--------|---------|------|
-| type | `'text' | 'password' | 'email' | 'number'` | 'text' | 否 | 输入框类型 |
-| label | `string` | - | 否 | 标签文本 |
-| placeholder | `string` | - | 否 | 占位符 |
-| disabled | `boolean` | false | 否 | 是否禁用 |
-| error | `string` | - | 否 | 错误信息 |
-| size | `'small' | 'medium' | 'large'` | 'medium' | 否 | 输入框大小 |
-
-### Events
-
-| 事件名 | 参数 | 说明 |
-|--------|------|------|
-| focus | `event: FocusEvent` | - |
-| blur | `event: FocusEvent` | - |
+| change | `value: number` | - |
 
 ### Slots
 

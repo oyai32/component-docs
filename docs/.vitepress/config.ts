@@ -8,7 +8,7 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: '首页', link: '/' },
-      { text: '示例', link: '/examples/button' },
+      { text: '示例', link: '/examples/base' },
       { text: 'API', link: '/api' },
       { text: '更新日志', link: '/changelog' }
     ],
@@ -17,8 +17,8 @@ export default defineConfig({
       '/examples/': [
         {
           items: [
-            { text: 'Button 按钮', link: '/examples/button' },
-            { text: 'Input 输入框', link: '/examples/input' }
+            { text: '基础示例', link: '/examples/base' },
+            { text: '其他示例', link: '/examples/custom' }
           ]
         }
       ]

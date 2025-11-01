@@ -14,17 +14,12 @@
     </aside>
 
     <main>
-      <header class="toolbar">
-        <div class="left">
-          <strong>当前 Demo：</strong>
-          <span>{{ currentDemoName || '未选择' }}</span>
-        </div>
-      </header>
-
       <section class="stage">
-        <component v-if="CurrentDemo" :is="CurrentDemo" />
-        <div v-else class="placeholder">
-          请选择左侧任一 Demo 进行预览。
+        <div class="demo-wrapper">
+          <component v-if="CurrentDemo" :is="CurrentDemo" />
+          <div v-else class="placeholder">
+            请选择左侧任一 Demo 进行预览。
+          </div>
         </div>
       </section>
     </main>
@@ -123,6 +118,8 @@ main {
   display: flex;
   flex-direction: column;
   min-width: 0;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .toolbar {
@@ -136,9 +133,21 @@ main {
 
 .stage {
   flex: 1;
-  overflow: auto;
+  overflow-x: auto;
+  overflow-y: auto;
   padding: 16px;
   background: #fafafa;
+  min-height: 0;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.demo-wrapper {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow: visible;
 }
 
 .placeholder {
