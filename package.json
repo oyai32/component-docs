@@ -28,7 +28,9 @@
     "vue-docgen-cli": "^4.79.0",
     "vue-tsc": "^1.8.0"
   },
-  "dependencies": {
-    "vue": "^3.3.0"
+  "peerDependencies": {
+    "vue": "^3.3.0",
+    "element-plus": "^2.8.0",
+    "@element-plus/icons-vue": "^2.3.1"
   }
 }
