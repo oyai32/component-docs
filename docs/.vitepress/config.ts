@@ -4,7 +4,7 @@ import { resolve } from 'path'
 export default defineConfig({
   title: 'xxx组件',
   description: 'xx组件文档',
-  
+  appearance: false,
   themeConfig: {
     nav: [
       { text: '首页', link: '/' },
