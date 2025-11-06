@@ -10,31 +10,37 @@
     </div>
     
     <div class="demo-toolbar">
-      <button @click="toggleCode" class="toolbar-btn">
-        <el-icon>
-          <component :is="showCode ? ArrowUp : ArrowDown" />
-        </el-icon>
-        {{ showCode ? '隐藏' : '显示' }}代码
-      </button>
-      <button v-if="showCode && sourceCode" @click="copyCode" class="toolbar-btn" :class="{ 'copied': copySuccess }">
-        <el-icon>
-          <component :is="copySuccess ? Check : DocumentCopy" />
-        </el-icon>
-        {{ copySuccess ? '已复制' : '复制代码' }}
-      </button>
+       <el-tooltip :content="copySuccess ? '已复制' : '复制代码'" placement="top">
+        <el-button type="text" @click="copyCode" class="toolbar-btn icon-btn" :class="{ 'copied': copySuccess }">
+          <el-icon>
+            <component :is="copySuccess ? Check : DocumentCopy" />
+          </el-icon>
+        </el-button>
+      </el-tooltip>
+
+      <el-tooltip :content="showCode ? '隐藏代码' : '显示代码'" placement="top">
+        <el-button type="text" @click="toggleCode" class="toolbar-btn icon-btn">
+          <el-icon> <component :is="showCode ? ArrowUp : ArrowDown" /></el-icon>
+        </el-button>
+      </el-tooltip>
+      
+      <!-- <el-tooltip content="在新标签页打开" placement="top">
+        <button @click="openInNewTab" class="toolbar-btn icon-btn">
+          <el-icon><View /></el-icon>
+        </button>
+      </el-tooltip> -->
     </div>
     
     <div v-if="showCode && sourceCode" class="demo-code-wrapper">
-      <div class="demo-code">
-        <pre class="line-numbers"><code class="language-vue" ref="codeElement">{{ sourceCode }}</code></pre>
-      </div>
+      <div class="demo-code" v-html="highlightedCode"></div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch, nextTick } from 'vue'
-import { ArrowUp, ArrowDown, DocumentCopy, Check } from '@element-plus/icons-vue'
+import { ref, onMounted, watch, computed } from 'vue'
+import { ArrowDown, DocumentCopy, Check, ArrowUp } from '@element-plus/icons-vue'
+import { codeToHtml } from 'shiki'
 
 interface Props {
   /** demo 组件路径，格式：demo/examples/BaseDemo.vue */
@@ -52,7 +58,7 @@ const sourceCode = ref('')
 const showCode = ref(props.defaultExpand)
 const error = ref<string | null>(null)
 const copySuccess = ref(false)
-const codeElement = ref<HTMLElement | null>(null)
+const highlightedCode = ref('')
 
 // 使用 import.meta.glob 预先加载所有 demo 组件和源码
 // 使用 eager: true 立即加载，创建映射关系
@@ -147,63 +153,21 @@ function loadSourceCode() {
   }
 }
 
-// 高亮代码和添加行号
-function highlightCode() {
-  nextTick(() => {
-    if (!codeElement.value || !sourceCode.value) return
-    
-    const code = sourceCode.value
-    const lines = code.split('\n')
-    const lineCount = lines.length
-    
-    // 生成行号 HTML
-    let lineNumbersHtml = ''
-    for (let i = 1; i <= lineCount; i++) {
-      lineNumbersHtml += `<span class="line-number">${i}</span>\n`
-    }
-    
-    // 高亮代码
-    // 先进行 HTML 转义
-    let highlightedCode = code
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-    
-    // 然后按优先级进行高亮（从特殊到一般）
-    // 1. 多行注释
-    highlightedCode = highlightedCode.replace(/(&lt;!--[\s\S]*?--&gt;)/g, '<span class="comment">$1</span>')
-    highlightedCode = highlightedCode.replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="comment">$1</span>')
-    
-    // 2. 单行注释
-    highlightedCode = highlightedCode.replace(/(\/\/.*$)/gm, '<span class="comment">$1</span>')
-    
-    // 3. 字符串（避免高亮注释和字符串中的内容）
-    highlightedCode = highlightedCode.replace(/(['"])((?:\\.|(?!\1)[^\\])*?)\1/g, '<span class="string">$1$2$1</span>')
-    
-    // 4. 插值表达式
-    highlightedCode = highlightedCode.replace(/\{\{([^}]+)\}\}/g, '<span class="interpolation">{{$1}}</span>')
-    
-    // 5. Vue 指令
-    highlightedCode = highlightedCode.replace(/(v-[a-z]+(?:-[a-z]+)*|:[\w-]+|@[\w-]+)/g, '<span class="directive">$1</span>')
-    
-    // 6. HTML 标签
-    highlightedCode = highlightedCode.replace(/(&lt;\/?)([\w-]+)(\s|&gt;)/g, (match, p1, p2, p3) => {
-      return `${p1}<span class="tag">${p2}</span>${p3}`
+// 使用 Shiki 高亮代码
+async function highlightCode() {
+  if (!sourceCode.value) return
+  
+  try {
+    const html = await codeToHtml(sourceCode.value, {
+      lang: 'vue',
+      theme: 'vitesse-light'
     })
-    
-    // 7. 属性名（在标签和 = 之间）
-    highlightedCode = highlightedCode.replace(/(&lt;[\w-]+\s+)([\w-]+)(=)/g, '$1<span class="attr">$2</span>$3')
-    
-    // 8. 关键字（最后处理，避免覆盖其他高亮）
-    highlightedCode = highlightedCode.replace(/\b(import|export|from|const|let|var|function|return|if|else|for|while|switch|case|default|break|continue|async|await|try|catch|finally|throw|defineProps|defineEmits|withDefaults|ref|computed|watch|onMounted|nextTick|setup|lang|scoped)\b/g, '<span class="keyword">$1</span>')
-    
-    // 按行处理，为每行添加行号容器
-    const highlightedLines = highlightedCode.split('\n').map((line, index) => {
-      return `<span class="line"><span class="line-number">${index + 1}</span><span class="line-content">${line || ' '}</span></span>`
-    }).join('\n')
-    
-    codeElement.value.innerHTML = highlightedLines
-  })
+    highlightedCode.value = html
+  } catch (err) {
+    console.error('代码高亮失败:', err)
+    // 降级方案：显示纯文本
+    highlightedCode.value = `<pre><code>${sourceCode.value}</code></pre>`
+  }
 }
 
 // 监听代码变化
@@ -247,6 +211,15 @@ async function copyCode() {
     alert('复制失败，请手动复制')
   }
 }
+
+// 在新标签页打开 demo
+function openInNewTab() {
+  // 从 src 中提取文件名，例如 demo/examples/BaseDemo.vue -> BaseDemo
+  const fileName = props.src.split('/').pop()?.replace('.vue', '') || ''
+  // 构建 demo 页面 URL
+  const demoUrl = `/demo/?demo=${fileName}`
+  window.open(demoUrl, '_blank')
+}
 </script>
 
 <style scoped>
@@ -285,45 +258,33 @@ async function copyCode() {
 .demo-toolbar {
   display: flex;
   justify-content: flex-end;
-  gap: 8px;
-  padding: 12px 16px;
-  background: #fff;
   border-bottom: 1px solid #e1e4e8;
+  padding: 0 12px;
 }
 
 .toolbar-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 6px 12px;
-  border: 1px solid #d0d7de;
-  border-radius: 6px;
-  background: #fff;
   color: #24292f;
   font-size: 13px;
   cursor: pointer;
   transition: all 0.2s;
 }
 
+/* 图标按钮样式 */
 .toolbar-btn:hover {
-  background: #f3f4f6;
-  border-color: #0969da;
   color: #0969da;
 }
 
-.toolbar-btn:active {
-  background: #f3f4f6;
+.toolbar-btn.copied {
+  color: #52c41a;
 }
 
-.toolbar-btn.copied {
-  border-color: #52c41a;
+.toolbar-btn.copied:hover {
   color: #52c41a;
-  background: #f6ffed;
 }
 
 .demo-code-wrapper {
-  background: #1e1e1e;
   border-top: 1px solid #e1e4e8;
+  overflow: hidden;
 }
 
 .demo-code {
@@ -332,84 +293,22 @@ async function copyCode() {
   overflow-y: auto;
 }
 
-.demo-code pre {
+/* Shiki 生成的代码样式调整 */
+.demo-code :deep(pre) {
   margin: 0;
-  padding: 20px 0;
-  background: transparent;
-  overflow-x: auto;
+  padding: 20px;
   font-size: 13px;
   line-height: 1.7;
 }
 
-.demo-code code {
+.demo-code :deep(code) {
   font-family: 'SFMono-Regular', 'Consolas', 'Liberation Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
   font-size: 13px;
   line-height: 1.7;
-  color: #d4d4d4;
-  white-space: pre;
-  display: block;
-  width: 100%;
-  word-wrap: normal;
-  counter-reset: line;
 }
 
-.demo-code .line {
-  display: flex;
-  padding: 0 20px;
-}
-
-.demo-code .line:hover {
+/* 行悬停效果 */
+.demo-code :deep(.line:hover) {
   background: rgba(255, 255, 255, 0.05);
-}
-
-.demo-code .line-number {
-  display: inline-block;
-  width: 50px;
-  padding-right: 16px;
-  text-align: right;
-  color: #6e7681;
-  user-select: none;
-  flex-shrink: 0;
-  counter-increment: line;
-}
-
-.demo-code .line-content {
-  flex: 1;
-  padding-left: 0;
-  white-space: pre;
-  overflow-x: auto;
-}
-</style>
-
-<style>
-/* 代码高亮样式 */
-.demo-code .tag {
-  color: #569cd6;
-}
-
-.demo-code .attr {
-  color: #9cdcfe;
-}
-
-.demo-code .string {
-  color: #ce9178;
-}
-
-.demo-code .keyword {
-  color: #c586c0;
-  font-weight: 600;
-}
-
-.demo-code .directive {
-  color: #c586c0;
-}
-
-.demo-code .comment {
-  color: #6a9955;
-  font-style: italic;
-}
-
-.demo-code .interpolation {
-  color: #d4a574;
 }
 </style>
