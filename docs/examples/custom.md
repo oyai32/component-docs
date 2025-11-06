@@ -2,9 +2,4 @@
 
 xxxx 这里是一些描述
 
-
-<script setup>
-import Demo from '../../demo/examples/customDemo.vue'
-</script>
-
-<Demo />
+<DemoContainer src="demo/examples/CustomDemo.vue" />
