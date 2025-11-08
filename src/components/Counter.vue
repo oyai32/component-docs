@@ -32,6 +32,11 @@
   </div>
 </template>
 
+<script lang="ts">
+export default {
+  name: 'Counter'
+}
+</script>
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { Minus, Plus } from '@element-plus/icons-vue'

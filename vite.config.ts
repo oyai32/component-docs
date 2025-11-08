@@ -12,9 +12,12 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
-      name: 'ComponentDocs',
-      fileName: 'component-docs'
+      // 全局库名
+      name: 'Counter',
+      // 输出文件名
+      fileName: 'counter'
     },
+    // 排除依赖包
     rollupOptions: {
       external: ['vue'],
       output: {

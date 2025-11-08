@@ -1,11 +1,16 @@
 {
-  "name": "component-docs",
+  "name": "@oyai32/counter",
   "version": "1.0.0",
-  "description": "组件文档项目",
+  "description": "xx组件",
   "type": "module",
+  "main": "./dist/counter.umd.cjs",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vitepress dev docs",
     "build": "vitepress build docs",
+    "build:lib": "vite build",
     "preview": "vitepress preview docs",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
