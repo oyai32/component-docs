@@ -21,10 +21,6 @@ const count = ref(0)
 </script>
 
 <style scoped>
-.counter-demo {
-  padding: 20px;
-}
-
 .demo-section {
   margin-bottom: 40px;
   padding: 20px;

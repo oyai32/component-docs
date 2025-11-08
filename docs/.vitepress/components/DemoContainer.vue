@@ -225,14 +225,13 @@ function openInNewTab() {
 <style scoped>
 .demo-container {
   border: 1px solid #e1e4e8;
-  border-radius: 8px;
+  border-radius: 4px;
   margin: 24px 0;
   overflow: hidden;
   background: #fff;
 }
 
 .demo-preview {
-  padding: 24px;
   border-bottom: 1px solid #e1e4e8;
   background: #fafafa;
   min-height: 100px;
