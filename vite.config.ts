@@ -23,8 +23,17 @@ export default defineConfig({
       output: {
         globals: {
           vue: 'Vue'
+        },
+        // 将样式文件统一命名为 style.css
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name && assetInfo.name.endsWith('.css')) {
+            return 'style.css'
+          }
+          return assetInfo.name || '[name][extname]'
         }
       }
-    }
+    },
+    // 生成单一样式文件，输出为 dist/style.css
+    cssCodeSplit: false
   }
 })

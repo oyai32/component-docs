@@ -4,6 +4,14 @@
   "description": "xx组件",
   "type": "module",
   "main": "./dist/counter.umd.cjs",
+  "module": "./dist/counter.js",
+  "exports": {
+    ".": {
+      "import": "./dist/counter.js",
+      "require": "./dist/counter.umd.cjs"
+    },
+    "./style.css": "./dist/style.css"
+  },
   "files": [
     "dist"
   ],
