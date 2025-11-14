@@ -31,9 +31,9 @@ async function generateApiDoc() {
   
   let apiContent = `<!-- 
 
-本文档自动生成自 `src/components` 目录下的组件源码。
+本文档自动生成自 \`src/components\` 目录下的组件源码。
 
-本文档会自动更新，修改组件后运行 `npm run api:generate` 即可重新生成。
+本文档会自动更新，修改组件后运行 \`npm run api:generate\` 即可重新生成。
 
 -->
 
@@ -262,4 +262,5 @@ function parseSlots(source) {
 
 // 运行
 generateApiDoc().catch(console.error)
+
 
