@@ -1,6 +1,6 @@
 {
   "name": "@oyai32/counter",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "xx组件",
   "type": "module",
   "main": "./dist/counter.umd.cjs",
