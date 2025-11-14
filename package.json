@@ -19,6 +19,7 @@
     "dev": "vitepress dev docs",
     "build": "vitepress build docs",
     "build:lib": "vite build",
+    "release:patch": "git add -A && git commit -m 'chore: prepare release' || true && npm version patch -m 'chore(release): %s' && git push && git push --tags && npm run build:lib && npm publish",
     "preview": "vitepress preview docs",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
