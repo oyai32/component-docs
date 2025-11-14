@@ -1,6 +1,7 @@
 // 主题入口文件
 // VitePress 官方推荐的方式：通过 theme/index.ts 来扩展主题
 import Theme from 'vitepress/theme'
+import './style.css';
 import type { EnhanceAppContext } from 'vitepress'
 
 // 导入 Element Plus

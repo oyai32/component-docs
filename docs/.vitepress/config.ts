@@ -7,7 +7,7 @@ export default defineConfig({
   appearance: false,
   themeConfig: {
     nav: [
-      { text: '首页', link: '/' },
+      { text: '使用指南', link: '/guide' },
       { text: '示例', link: '/examples/base' },
       { text: 'API', link: '/api' },
       { text: '更新日志', link: '/changelog' }

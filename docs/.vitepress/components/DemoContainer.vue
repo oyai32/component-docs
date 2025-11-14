@@ -158,10 +158,24 @@ async function highlightCode() {
   if (!sourceCode.value) return
   
   try {
-    const html = await codeToHtml(sourceCode.value, {
-      lang: 'vue',
-      theme: 'vitesse-light'
-    })
+const html = await codeToHtml(sourceCode.value, {
+  lang: 'vue',
+  theme: {
+    type: 'light',
+    colors: {
+      'editor.background': '#f8fafc', // 背景色
+      'editor.foreground': '#334155', // 文字颜色
+    },
+    tokenColors: [
+      {
+        scope: ['keyword', 'operator'],
+        settings: {
+          foreground: '#dc2626'
+        }
+      }
+    ]
+  }
+})
     highlightedCode.value = html
   } catch (err) {
     console.error('代码高亮失败:', err)
@@ -225,7 +239,7 @@ function openInNewTab() {
 <style scoped>
 .demo-container {
   border: 1px solid #e1e4e8;
-  border-radius: 4px;
+  border-radius: 8px;
   margin: 24px 0;
   overflow: hidden;
   background: #fff;
@@ -233,8 +247,8 @@ function openInNewTab() {
 
 .demo-preview {
   border-bottom: 1px solid #e1e4e8;
-  background: #fafafa;
   min-height: 100px;
+  padding: 20px;
 }
 
 .loading,
@@ -257,8 +271,7 @@ function openInNewTab() {
 .demo-toolbar {
   display: flex;
   justify-content: flex-end;
-  border-bottom: 1px solid #e1e4e8;
-  padding: 0 12px;
+  padding: 4px 12px;
 }
 
 .toolbar-btn {

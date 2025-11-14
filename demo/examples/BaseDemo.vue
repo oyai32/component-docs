@@ -26,25 +26,3 @@ import Counter from '@/components/Counter.vue'
 const count = ref(0)
 </script>
 
-<style scoped>
-.demo-section {
-  margin-bottom: 40px;
-  padding: 20px;
-  border: 1px solid #eee;
-  border-radius: 8px;
-  background: #fafafa;
-}
-
-.demo-section h3 {
-  margin-top: 0;
-  margin-bottom: 15px;
-  color: #333;
-  font-size: 16px;
-}
-
-.demo-section p {
-  margin: 10px 0 0;
-  color: #666;
-  font-size: 14px;
-}
-</style>
