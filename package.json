@@ -16,13 +16,11 @@
     "dist"
   ],
   "scripts": {
-    "dev": "vitepress dev docs",
-    "build": "vitepress build docs",
-    "build:lib": "vite build",
+    "dev": "npm run api:generate && npm run changelog:generate && vitepress dev docs",
+    "build": "npm run api:generate && npm run changelog:generate && vitepress build docs",
     "preview": "vitepress preview docs",
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs",
+    "lib:build": "vite build",
+    "lib:publish": "npm version patch -m 'chore: release %s' && git push --follow-tags && npm run build:lib && npm publish",
     "demo:dev": "vite --open /demo/",
     "demo:preview": "vite preview --open /demo/",
     "api:generate": "node scripts/generate-api-doc.js",
