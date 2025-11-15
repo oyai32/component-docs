@@ -93,3 +93,7 @@ jspm_packages/
 
 .history/
 docs/.vitepress/cache/
+
+# 自动生成的文档
+docs/api.md
+docs/changelog.md

@@ -56,7 +56,7 @@ function getGitCommits(range = '') {
 function buildChangelog({ version, commits }) {
   const date = new Date().toISOString().split('T')[0]
   let content = `<!-- 
-本文档会根据提交记录自动更新，运行 \`npm run changelog:generate\` 即可重新生成。
+本文档会根据提交记录自动更新，请勿修改。
 -->
 # 更新日志\n\n`
   content += `## ${version} (${date})\n\n`
