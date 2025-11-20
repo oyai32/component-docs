@@ -2,8 +2,8 @@ import { defineConfig } from 'vitepress'
 import { resolve } from 'path'
 
 export default defineConfig({
-  title: 'xxx组件',
-  description: 'xx组件文档',
+  title: 'Counter',
+  description: 'Counter 组件及文档',
   appearance: false,
   themeConfig: {
     nav: [
