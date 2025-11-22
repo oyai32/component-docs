@@ -1,0 +1,25 @@
+{
+  "name": "@oyai32/component-cli",
+  "version": "1.0.0",
+  "description": "生成组件模板的工具",
+  "main": "index.js",
+  "bin": {
+    "component-cli": "./bin/component-cli.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chalk": "^5.6.2",
+    "clear": "^0.1.0",
+    "commander": "^14.0.2",
+    "download-git-repo": "^3.0.2",
+    "figlet": "^1.9.4",
+    "handlebars": "^4.7.8",
+    "open": "^11.0.0",
+    "ora": "^9.0.0"
+  }
+}
